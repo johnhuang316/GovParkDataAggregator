@@ -12,17 +12,18 @@ class ParkingData(ABC):
 class ParkingLot(ParkingData):
     official_id: str
     name: str
+    description: str = ""
     county: str = ""
     district: str = ""
     address: str = ""
-    total_parking_spaces: int = 0
-    total_motorcycle_spaces: int = 0
-    total_charging_stations: int = 0
+    total_parking_spaces: int = -9
+    total_motorcycle_spaces: int = -9
+    total_charging_stations: int = -9
 
 
 @dataclass
 class TimeParkingAvailability(ParkingData):
     official_id: str
-    remaining_parking_spaces: int = 0
-    remaining_motorcycle_spaces: int = 0
-    remaining_charging_stations: int = 0
+    remaining_parking_spaces: int = -9
+    remaining_motorcycle_spaces: int = -9
+    remaining_charging_stations: int = -9

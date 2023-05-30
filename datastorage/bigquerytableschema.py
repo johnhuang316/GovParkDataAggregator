@@ -21,6 +21,7 @@ class ParkingLot(TableSchema):
         return [
             bigquery.SchemaField("official_id", "STRING", mode="REQUIRED"),
             bigquery.SchemaField("name", "STRING", mode="REQUIRED"),
+            bigquery.SchemaField("description", "STRING", mode="REQUIRED"),
             bigquery.SchemaField("county", "STRING"),
             bigquery.SchemaField("district", "STRING"),
             bigquery.SchemaField("address", "STRING"),

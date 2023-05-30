@@ -12,9 +12,9 @@ class IDataStorage(ABC):
         pass
 
     @abstractmethod
-    def insert_data(self, table: string, datas: list[ParkingData]):
+    def insert_data(self, table_name: string, datas: list[ParkingData]):
         pass
 
     @abstractmethod
-    def close(self):
+    def remove_table(self, table_name: string):
         pass

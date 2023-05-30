@@ -1,13 +1,43 @@
-import requests
 from typing import List
-from dto.parkingdata import ParkingData
+import requests
+from dto.parkingdata import ParkingData, ParkingLot
 from .iapi import IApi
 
 
 class TaipeiApi(IApi):
 
     def get_parking_lot_data(self) -> List[ParkingData]:
-        response = requests.get("http://api.open-notify.org/iss-now.json")
-        print(response.status_code)
-        print(response.json())
-        return 
+        result = []
+        try:
+            response = requests.get(
+                "https://tcgbusfs.blob.core.windows.net/blobtcmsv/TCMSV_alldesc.json", timeout=10)
+            print(response.status_code)
+            data = response.json()['data']
+            print(data['UPDATETIME'])
+            parks = data['park']
+            for park in parks:
+                result.append(
+                    ParkingLot(
+                        official_id=park.get('id'),
+                        name=park.get('name'),
+                        description=f"{park.get('summary')}\n{park.get('payex')}",
+                        county='Taipei',
+                        district=park.get('area'),
+                        address=park.get('address'),
+                        total_parking_spaces=park.get('totalcar', -9),
+                        total_motorcycle_spaces=park.get('totalmotor', -9),
+                        total_charging_stations=self.__get_charging_station(
+                            park.get('ChargingStation', "").strip())
+                    )
+                )
+        except requests.exceptions.HTTPError:
+            print('The request http error')
+            print(response.status_code)
+        except requests.exceptions.Timeout:
+            print('The request timed out')
+            print(response.status_code)
+
+        return result
+
+    def __get_charging_station(self, value) -> int:
+        return -9 if value == "" else int(value)
