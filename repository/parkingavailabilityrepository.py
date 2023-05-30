@@ -5,9 +5,9 @@ from .irepository import IPepository
 
 
 @dataclass
-class ParkingLotPepository(IPepository):
+class ParkingAvailabilityRepository(IPepository):
     def __post_init__(self):
-        self.table_name = "parking_lot"
+        self.table_name = "time_parking_availability"
 
     def create_table(self, table_schema: TableSchema):
         self.database.create_table(table_schema)

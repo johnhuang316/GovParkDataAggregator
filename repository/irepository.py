@@ -9,6 +9,7 @@ from datastorage.bigquerytableschema import TableSchema
 @dataclass
 class IPepository(ABC):
     database: IDataStorage
+    table_name: string = ''
 
     @abstractmethod
     def create_table(self, table_schema: TableSchema):
@@ -19,5 +20,5 @@ class IPepository(ABC):
         pass
 
     @abstractmethod
-    def remove_table(self, table_name: string):
+    def remove_table(self):
         pass

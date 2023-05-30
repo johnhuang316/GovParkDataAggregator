@@ -42,10 +42,11 @@ class TimeParkingAvailability(TableSchema):
     def get_create_table_schema(self):
         return [
             bigquery.SchemaField("official_id", "STRING", mode="REQUIRED"),
-            bigquery.SchemaField("total_parking_spaces",
+            bigquery.SchemaField("county", "STRING", mode="REQUIRED"),
+            bigquery.SchemaField("remaining_parking_spaces",
                                  "INTEGER", mode="REQUIRED"),
-            bigquery.SchemaField("total_motorcycle_spaces",
+            bigquery.SchemaField("remaining_motorcycle_spaces",
                                  "INTEGER", mode="REQUIRED"),
-            bigquery.SchemaField("total_charging_stations",
+            bigquery.SchemaField("remaining_charging_stations",
                                  "INTEGER", mode="REQUIRED"),
         ]

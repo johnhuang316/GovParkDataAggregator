@@ -10,3 +10,7 @@ class IApi(ABC):
     @abstractmethod
     def get_parking_lot_data(self) -> List[ParkingData]:
         pass
+
+    @abstractmethod
+    def get_allavailable_data(self) -> List[ParkingData]:
+        pass

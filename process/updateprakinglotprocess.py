@@ -10,7 +10,7 @@ class UpdateParkingLotProcess(IProcess):
     def exec(self):
         repository = self.repository
         table_schema = ParkingLot()
-        repository.remove_table(table_schema.table_name)
+        repository.remove_table()
         repository.create_table(table_schema)
         time.sleep(20)
         for api in self.api_list:

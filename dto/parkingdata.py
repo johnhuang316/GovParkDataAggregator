@@ -24,6 +24,7 @@ class ParkingLot(ParkingData):
 @dataclass
 class TimeParkingAvailability(ParkingData):
     official_id: str
+    county: str
     remaining_parking_spaces: int = -9
     remaining_motorcycle_spaces: int = -9
     remaining_charging_stations: int = -9

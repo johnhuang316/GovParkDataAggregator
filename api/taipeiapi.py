@@ -1,6 +1,6 @@
 from typing import List
 import requests
-from dto.parkingdata import ParkingData, ParkingLot
+from dto.parkingdata import ParkingData, ParkingLot, TimeParkingAvailability
 from .iapi import IApi
 
 
@@ -39,5 +39,39 @@ class TaipeiApi(IApi):
 
         return result
 
+    def get_allavailable_data(self) -> List[ParkingData]:
+        result = []
+        try:
+            response = requests.get(
+                "https://tcgbusfs.blob.core.windows.net/blobtcmsv/TCMSV_allavailable.json", timeout=10)
+            print(response.status_code)
+            data = response.json()['data']
+            print(data['UPDATETIME'])
+            parks = data['park']
+            for park in parks:
+                result.append(
+                    TimeParkingAvailability(
+                        official_id=park.get('id'),
+                        county='Taipei',
+                        remaining_parking_spaces=park.get('availablecar',-9),
+                        remaining_motorcycle_spaces=park.get('availablemotor',-9),
+                        remaining_charging_stations=self.__abailable_charging_station(park.get('ChargeStation',{"scoketStatusList":[]}))
+                    )
+                )
+        except requests.exceptions.HTTPError:
+            print('The request http error')
+            print(response.status_code)
+        except requests.exceptions.Timeout:
+            print('The request timed out')
+            print(response.status_code)
+        return result
+
+
     def __get_charging_station(self, value) -> int:
         return -9 if value == "" else int(value)
+
+    def __abailable_charging_station(self, charge_station) -> int:
+        scoket_status_list = charge_station['scoketStatusList']
+        if scoket_status_list == []:
+            return -9
+        return sum(p['spot_status'] == "待機中" for p in scoket_status_list)
