@@ -49,4 +49,6 @@ class TimeParkingAvailability(TableSchema):
                                  "INTEGER", mode="REQUIRED"),
             bigquery.SchemaField("remaining_charging_stations",
                                  "INTEGER", mode="REQUIRED"),
+            bigquery.SchemaField("time",
+                                 "TIMESTAMP", mode="REQUIRED"),
         ]
