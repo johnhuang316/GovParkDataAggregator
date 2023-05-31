@@ -39,6 +39,4 @@ class BigQueryStorage(IDataStorage):
 
     def __get_table_id(self, table_name: string) -> string:
         dataset_id = os.getenv("BIGQUERY_ID", default="")
-        table_id = f"{dataset_id}.{table_name}"
-        print(table_id)
-        return table_id
+        return f"{dataset_id}.{table_name}"

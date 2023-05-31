@@ -30,6 +30,4 @@ def main():
 
 if __name__ == "__main__":
     load_dotenv()
-    print(os.getenv("ACTION"))
-    print(os.getenv("BIGQUERY_ID"))
     main()
