@@ -4,13 +4,17 @@ from datastorage.bigquerystorage import BigQueryStorage
 from repository.parkinglotrepository import ParkingLotPepository
 from repository.parkingavailabilityrepository import ParkingAvailabilityRepository
 from api.taipeiapi import TaipeiApi
+from api.taoyuanapi import TaoyuanApi
 from process.updateprakinglotprocess import UpdateParkingLotProcess
 from process.logparkingavailability import LogParkingAvailability
 from process.resetparkingavailability import ResetParkingAvailability
 
 
 def main():
-    api_list = [TaipeiApi()]
+    api_list = [
+        TaipeiApi(),
+        TaoyuanApi()
+        ]
     action = os.getenv("ACTION", default="")
     match  action:
         case "update_parking_lot":
