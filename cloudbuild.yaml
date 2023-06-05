@@ -9,6 +9,7 @@
    entrypoint: gcloud
    args:
    - 'run'
+   - 'jobs'
    - 'deploy'
    - '$_SERVICE_NAME'
    - '--image'
