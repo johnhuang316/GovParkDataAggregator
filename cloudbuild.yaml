@@ -10,7 +10,7 @@
    args:
    - 'run'
    - 'jobs'
-   - 'deploy'
+   - 'update'
    - '$_SERVICE_NAME'
    - '--image'
    - 'us-east1-docker.pkg.dev/$PROJECT_ID/$_JOB_NAME/$_JOB_NAME:$TAG_NAME'
