@@ -2,9 +2,9 @@
  - name: 'gcr.io/cloud-builders/docker'
    args: ['build', '-t', '$_JOB_NAME:$TAG_NAME', '.']
  - name: 'gcr.io/cloud-builders/docker'
-   args: ['tag', '$_JOB_NAME:$TAG_NAME', 'us-east1-docker.pkg.dev/$PROJECT_ID/$_JOB_NAME/$_JOB_NAME:$TAG_NAME']
+   args: ['tag', '$_JOB_NAME:$TAG_NAME', '$_REGION-docker.pkg.dev/$PROJECT_ID/$_JOB_NAME/$_JOB_NAME:$TAG_NAME']
  - name: 'gcr.io/cloud-builders/docker'
-   args: ['push', 'us-east1-docker.pkg.dev/$PROJECT_ID/$_JOB_NAME/$_JOB_NAME:$TAG_NAME']
+   args: ['push', '$_REGION-docker.pkg.dev/$PROJECT_ID/$_JOB_NAME/$_JOB_NAME:$TAG_NAME']
  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
    entrypoint: gcloud
    args:
@@ -13,8 +13,8 @@
    - 'update'
    - '$_SERVICE_NAME'
    - '--image'
-   - 'us-east1-docker.pkg.dev/$PROJECT_ID/$_JOB_NAME/$_JOB_NAME:$TAG_NAME'
+   - '$_REGION-docker.pkg.dev/$PROJECT_ID/$_JOB_NAME/$_JOB_NAME:$TAG_NAME'
    - '--region'
    - '$_REGION'
  images:
- - 'us-east1-docker.pkg.dev/$PROJECT_ID/$_JOB_NAME/$_JOB_NAME:$TAG_NAME'
+ - '$_REGION-docker.pkg.dev/$PROJECT_ID/$_JOB_NAME/$_JOB_NAME:$TAG_NAME'
