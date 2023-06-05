@@ -28,7 +28,6 @@ def main():
             process = ResetParkingAvailability(repository)
         case _:
             print("not matched")
-
     process.exec()
 
 
