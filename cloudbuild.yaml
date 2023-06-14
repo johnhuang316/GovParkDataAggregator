@@ -5,7 +5,8 @@ steps:
   args: ['tag', '$_JOB_NAME:$TAG_NAME', '$_REGION-docker.pkg.dev/$PROJECT_ID/$_JOB_NAME/$_JOB_NAME:$TAG_NAME']
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', '$_REGION-docker.pkg.dev/$PROJECT_ID/$_JOB_NAME/$_JOB_NAME:$TAG_NAME']
-- name: gcr.io/google.com/cloudsdktool/cloud-sdk
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: 'bash'
   env:
     - HOST=$_REGION-docker.pkg.dev
     - PROJECT=$PROJECT_ID
