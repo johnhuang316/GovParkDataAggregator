@@ -16,6 +16,7 @@ steps:
   script: |
     #!/usr/bin/env bash
     jobs=$(gcloud run jobs list --format="value(name)")
+    echo jobs
     for job in $jobs; do
       if [[ $job == "parking-lot-allavailable"* ]]; then
         gcloud run jobs update $job --image=$HOST/$PROJECT/$REPO/$SERVICE:$COMMIT --region=REGION
