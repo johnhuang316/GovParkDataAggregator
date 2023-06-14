@@ -19,7 +19,7 @@ steps:
     echo jobs
     for job in $jobs; do
       if [[ $job == "parking-lot-allavailable"* ]]; then
-        gcloud run jobs update $job --image=$HOST/$PROJECT/$REPO/$SERVICE:$COMMIT --region=REGION
+        gcloud run jobs update $job --image=$HOST/$PROJECT/$REPO/$SERVICE:$COMMIT --region=$REGION
       fi
     done
 images:
