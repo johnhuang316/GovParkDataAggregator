@@ -14,7 +14,7 @@ steps:
     - 'COMMIT=$TAG_NAME'
     - 'REGION=$_REGION'
   script: |
-    #!/usr/bin/env
+    #!/usr/bin/env bash
     jobs=$(gcloud run jobs list --format="value(name)")
     echo jobs
     for job in $jobs; do
