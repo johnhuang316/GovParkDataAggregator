@@ -1,10 +1,10 @@
- steps:
- - name: 'gcr.io/cloud-builders/docker'
-   args: ['build', '-t', '$_JOB_NAME:$TAG_NAME', '.']
- - name: 'gcr.io/cloud-builders/docker'
-   args: ['tag', '$_JOB_NAME:$TAG_NAME', '$_REGION-docker.pkg.dev/$PROJECT_ID/$_JOB_NAME/$_JOB_NAME:$TAG_NAME']
- - name: 'gcr.io/cloud-builders/docker'
-   args: ['push', '$_REGION-docker.pkg.dev/$PROJECT_ID/$_JOB_NAME/$_JOB_NAME:$TAG_NAME']
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', '$_JOB_NAME:$TAG_NAME', '.']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['tag', '$_JOB_NAME:$TAG_NAME', '$_REGION-docker.pkg.dev/$PROJECT_ID/$_JOB_NAME/$_JOB_NAME:$TAG_NAME']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', '$_REGION-docker.pkg.dev/$PROJECT_ID/$_JOB_NAME/$_JOB_NAME:$TAG_NAME']
 - name: gcr.io/google.com/cloudsdktool/cloud-sdk
   env:
     - HOST=$_REGION-docker.pkg.dev
@@ -13,7 +13,6 @@
     - SERVICE=$_JOB_NAME
     - COMMIT=$TAG_NAME
     - REGION=$_REGION
-  id: Deploy Jobs
   script: |
     #!/usr/bin/env bash
     jobs=$(gcloud run jobs list --format="value(name)")
@@ -22,5 +21,5 @@
         gcloud run jobs update $job --image=$HOST/$PROJECT/$REPO/$SERVICE:$COMMIT --region=REGION
       fi
     done
- images:
- - '$_REGION-docker.pkg.dev/$PROJECT_ID/$_JOB_NAME/$_JOB_NAME:$TAG_NAME'
+images:
+- '$_REGION-docker.pkg.dev/$PROJECT_ID/$_JOB_NAME/$_JOB_NAME:$TAG_NAME'
