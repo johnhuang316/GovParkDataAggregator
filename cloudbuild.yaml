@@ -6,16 +6,15 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', '$_REGION-docker.pkg.dev/$PROJECT_ID/$_JOB_NAME/$_JOB_NAME:$TAG_NAME']
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  entrypoint: 'bash'
   env:
-    - HOST=$_REGION-docker.pkg.dev
-    - PROJECT=$PROJECT_ID
-    - REPO=$_JOB_NAME
-    - SERVICE=$_JOB_NAME
-    - COMMIT=$TAG_NAME
-    - REGION=$_REGION
+    - 'HOST=$_REGION-docker.pkg.dev'
+    - 'PROJECT=$PROJECT_ID'
+    - 'REPO=$_JOB_NAME'
+    - 'SERVICE=$_JOB_NAME'
+    - 'COMMIT=$TAG_NAME'
+    - 'REGION=$_REGION'
   script: |
-    #!/usr/bin/env bash
+    #!/usr/bin/env
     jobs=$(gcloud run jobs list --format="value(name)")
     echo jobs
     for job in $jobs; do
