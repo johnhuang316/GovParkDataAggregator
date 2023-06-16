@@ -3,9 +3,7 @@ from dotenv import load_dotenv
 from datastorage.bigquerystorage import BigQueryStorage
 from repository.parkinglotrepository import ParkingLotPepository
 from repository.parkingavailabilityrepository import ParkingAvailabilityRepository
-from api.taipeiapi import TaipeiApi
-from api.taoyuanapi import TaoyuanApi
-from api.apifactory import ApiFactory
+from api.apifactory import get_api
 from process.updateprakinglotprocess import UpdateParkingLotProcess
 from process.logparkingavailability import LogParkingAvailability
 from process.resetparkingavailability import ResetParkingAvailability
@@ -13,8 +11,8 @@ from process.resetparkingavailability import ResetParkingAvailability
 
 def main():
     api_list = [
-        TaipeiApi(),
-        TaoyuanApi()
+        get_api("Taipei"),
+        get_api("Taoyuan")
     ]
     action = os.getenv("ACTION", default="")
     match  action:
@@ -26,9 +24,8 @@ def main():
             process = LogParkingAvailability(repository, api_list)
         case "single_log_parking_availability":
             api_name = os.getenv("API", default="")
-            api_factory = ApiFactory(api_name)
             single_api_list = [
-                api_factory.get_api()
+                get_api(api_name)
             ]
             repository = ParkingAvailabilityRepository(BigQueryStorage())
             process = LogParkingAvailability(repository, single_api_list)
