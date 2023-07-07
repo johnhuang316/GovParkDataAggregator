@@ -10,5 +10,5 @@ class IProcess(ABC):
     api_list: list[IApi] = None
 
     @abstractmethod
-    def exec(self):
+    def exec(self) -> bool:
         pass
