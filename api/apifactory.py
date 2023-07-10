@@ -14,8 +14,8 @@ class ApiFactory:
                 subclasses[api_instance.name] = obj
         return subclasses
 
-    def create(self, api_type: str) -> IApi:
+    def get_api(self, api_type: str) -> IApi:
         if api_type in self.api_classes:
             return self.api_classes[api_type]()
-        else:
-            raise ValueError(f"The API type '{api_type}' is not supported.")
+
+        raise ValueError(f"The API type '{api_type}' is not supported.")

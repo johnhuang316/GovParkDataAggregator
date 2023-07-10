@@ -1,13 +1,18 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import List
+import requests
 from dto.parkingdata import ParkingData
 from .apierror import ApiError
-import requests
 
 
 @dataclass
 class IApi(ABC):
+
+    @property
+    @abstractmethod
+    def name(self):
+        pass
 
     @abstractmethod
     def get_parking_lot_data(self) -> List[ParkingData]:

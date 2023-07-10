@@ -6,6 +6,10 @@ from .iapi import IApi,call_api
 
 class TaipeiApi(IApi):
 
+    @property
+    def name(self):
+        return "Taipei"
+
     def get_parking_lot_data(self) -> List[ParkingData]:
         result = []
         api="https://tcgbusfs.blob.core.windows.net/blobtcmsv/TCMSV_alldesc.json"

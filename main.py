@@ -3,41 +3,42 @@ from dotenv import load_dotenv
 from datastorage.bigquerystorage import BigQueryStorage
 from repository.parkinglotrepository import ParkingLotPepository
 from repository.parkingavailabilityrepository import ParkingAvailabilityRepository
-from api.apifactory import get_api
+from api.apifactory import ApiFactory
 from process.updateprakinglotprocess import UpdateParkingLotProcess
 from process.logparkingavailability import LogParkingAvailability
 from process.resetparkingavailability import ResetParkingAvailability
 
 
 def main():
+    api_factory = ApiFactory()
     api_list = [
-        get_api("Taipei"),
-        get_api("Taoyuan")
+        api_factory.get_api("Taipei"),
+        api_factory.get_api("Taoyuan")
     ]
-    repository = ParkingLotPepository(BigQueryStorage())
+    storage = BigQueryStorage()
     action = os.getenv("ACTION", default="")
     match  action:
         case "update_parking_lot":
-            repository = ParkingLotPepository(BigQueryStorage())
+            repository = ParkingLotPepository(storage)
             process = UpdateParkingLotProcess(repository, api_list)
         case "log_parking_availability":
-            repository = ParkingAvailabilityRepository(BigQueryStorage())
+            repository = ParkingAvailabilityRepository(storage)
             process = LogParkingAvailability(repository, api_list)
         case "single_log_parking_availability":
             api_name = os.getenv("API", default="")
             single_api_list = [
-                get_api(api_name)
+                api_factory.get_api(api_name)
             ]
-            repository = ParkingAvailabilityRepository(BigQueryStorage())
+            repository = ParkingAvailabilityRepository(storage)
             process = LogParkingAvailability(repository, single_api_list)
         case "reset_parking_availability":
-            repository = ParkingAvailabilityRepository(BigQueryStorage())
+            repository = ParkingAvailabilityRepository(storage)
             process = ResetParkingAvailability(repository)
         case _:
             raise ValueError("no action")
 
-    successed = process.exec()
-    if not successed:
+    success = process.exec()
+    if not success:
         raise RuntimeError("process failed")
 
 
