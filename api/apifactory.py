@@ -1,12 +1,21 @@
-from api import taipeiapi, taoyuanapi, iapi
+import inspect
+import sys
+from api.iapi import IApi
 
+class ApiFactory:
+    def __init__(self):
+        self.api_classes = self._find_subclasses(IApi)
 
-def get_api(api_name) -> iapi.IApi:
-    match api_name:
-        case "Taipei":
-            api = taipeiapi.TaipeiApi()
-        case "Taoyuan":
-            api = taoyuanapi.TaoyuanApi()
-        case _:
-            raise ValueError("no api")
-    return api
+    def _find_subclasses(self, cls):
+        subclasses = {}
+        for _, obj in inspect.getmembers(sys.modules[__name__]):
+            if inspect.isclass(obj) and issubclass(obj, cls) and obj is not cls:
+                api_instance = obj()
+                subclasses[api_instance.name] = obj
+        return subclasses
+
+    def create(self, api_type: str) -> IApi:
+        if api_type in self.api_classes:
+            return self.api_classes[api_type]()
+        else:
+            raise ValueError(f"The API type '{api_type}' is not supported.")
