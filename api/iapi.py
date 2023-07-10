@@ -10,8 +10,7 @@ from .apierror import ApiError
 class IApi(ABC):
 
     @property
-    @abstractmethod
-    def name(self):
+    def api_name(self):
         pass
 
     @abstractmethod

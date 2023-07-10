@@ -1,18 +1,15 @@
 from typing import List
 from datetime import datetime
 from dto.parkingdata import ParkingData, ParkingLot, TimeParkingAvailability
-from .iapi import IApi,call_api
+from .iapi import IApi, call_api
 
 
 class TaipeiApi(IApi):
-
-    @property
-    def name(self):
-        return "Taipei"
+    api_name = 'Taipei'
 
     def get_parking_lot_data(self) -> List[ParkingData]:
         result = []
-        api="https://tcgbusfs.blob.core.windows.net/blobtcmsv/TCMSV_alldesc.json"
+        api = "https://tcgbusfs.blob.core.windows.net/blobtcmsv/TCMSV_alldesc.json"
 
         response = call_api(api)
         print(response.status_code)
@@ -34,7 +31,7 @@ class TaipeiApi(IApi):
                         park.get('ChargingStation', "").strip())
                 )
             )
-        
+
         return result
 
     def get_allavailable_data(self) -> List[ParkingData]:
@@ -46,20 +43,21 @@ class TaipeiApi(IApi):
         parks = data['park']
         now = datetime.now().isoformat(sep=" ", timespec="seconds")
         for park in parks:
-            charge_station = park.get('ChargeStation',{"scoketStatusList":[]})
+            charge_station = park.get(
+                'ChargeStation', {"scoketStatusList": []})
             result.append(
                 TimeParkingAvailability(
                     official_id=park.get('id'),
                     county='Taipei',
                     time=now,
-                    remaining_parking_spaces=park.get('availablecar',-9),
-                    remaining_motorcycle_spaces=park.get('availablemotor',-9),
-                    remaining_charging_stations=self.__abailable_charging(charge_station),
+                    remaining_parking_spaces=park.get('availablecar', -9),
+                    remaining_motorcycle_spaces=park.get('availablemotor', -9),
+                    remaining_charging_stations=self.__abailable_charging(
+                        charge_station),
                 )
             )
 
         return result
-
 
     def __get_charging_station(self, value) -> int:
         return -9 if value == "" else int(value)

@@ -26,7 +26,8 @@ class BigQueryStorage(IDataStorage):
 
     def insert_data(self, table_name: string, datas: list[ParkingData]):
         table_id = self.__get_table_id(table_name)
-        errors = self.client.insert_rows_json(table_id, [asdict(data) for data in datas], row_ids=[None] * len(datas))
+        errors = self.client.insert_rows_json(
+            table_id, [asdict(data) for data in datas], row_ids=[None] * len(datas))
         if not errors:
             print("New rows have been added.")
         else:

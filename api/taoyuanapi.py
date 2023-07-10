@@ -5,10 +5,7 @@ from .iapi import IApi, call_api
 
 
 class TaoyuanApi(IApi):
-
-    @property
-    def name(self):
-        return "Taoyuan"
+    api_name = 'Taoyuan'
 
     def get_parking_lot_data(self) -> List[ParkingData]:
         result = []

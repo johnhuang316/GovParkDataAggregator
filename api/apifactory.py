@@ -1,6 +1,8 @@
 import inspect
-import sys
-from api.iapi import IApi
+import pkgutil
+import api
+from .iapi import IApi
+
 
 class ApiFactory:
     def __init__(self):
@@ -8,10 +10,12 @@ class ApiFactory:
 
     def _find_subclasses(self, cls):
         subclasses = {}
-        for _, obj in inspect.getmembers(sys.modules[__name__]):
-            if inspect.isclass(obj) and issubclass(obj, cls) and obj is not cls:
-                api_instance = obj()
-                subclasses[api_instance.name] = obj
+        # Import every module in the 'api' package
+        for _, name, _ in pkgutil.walk_packages(api.__path__, api.__name__ + '.'):
+            module = __import__(name, fromlist='dummy')
+            for _, obj in inspect.getmembers(module):
+                if inspect.isclass(obj) and issubclass(obj, cls) and obj is not cls:
+                    subclasses[obj.api_name] = obj
         return subclasses
 
     def get_api(self, api_type: str) -> IApi:
