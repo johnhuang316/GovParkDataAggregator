@@ -31,7 +31,7 @@ class NewTaipeiApi(IApi):
 
     def get_allavailable_data(self) -> List[ParkingData]:
         result = []
-        api = "https://data.ntpc.gov.tw/api/datasets/b1464ef0-9c7c-4a6f-abf7-6bdf32847e68/json?size=1500"
+        api = "https://data.ntpc.gov.tw/api/datasets/e09b35a5-a738-48cc-b0f5-570b67ad9c78/json?size=1500"
         response = call_api(api)
         parks = response.json()
         now = datetime.now().isoformat(sep=" ", timespec="seconds")
