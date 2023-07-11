@@ -13,7 +13,8 @@ def main():
     api_factory = ApiFactory()
     api_list = [
         api_factory.get_api("Taipei"),
-        api_factory.get_api("Taoyuan")
+        api_factory.get_api("Taoyuan"),
+        api_factory.get_api("NewTaipei"),
     ]
     storage = BigQueryStorage()
     action = os.getenv("ACTION", default="")
