@@ -24,8 +24,9 @@ class IApi(ABC):
 
 def call_api(api):
     try:
-        response = requests.get(api, timeout=10)
-        print(response.status_code)
+        response = requests.get(api, timeout=30)
+        if response.status_code != 200:
+            raise ApiError(f'Failed to call api : {api}')
     except requests.exceptions.HTTPError as error:
         print(f'The request http error : {str(error)}')
         print(f'response status code : {response.status_code}')

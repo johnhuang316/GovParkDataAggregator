@@ -9,16 +9,20 @@ from .iprocess import IProcess
 class UpdateParkingLotProcess(IProcess):
 
     def exec(self) -> bool:
-        try:
-            repository = self.repository
-            table_schema = ParkingLot()
-            repository.remove_table()
-            repository.create_table(table_schema)
-            time.sleep(20)
-            for api in self.api_list:
+        success = True
+        repository = self.repository
+        table_schema = ParkingLot()
+        repository.remove_table()
+        time.sleep(20)
+        repository.create_table(table_schema)
+        time.sleep(20)
+        for api in self.api_list:
+            try:
+                print(f"Updating parking lot : {api.api_name}")
                 datas = api.get_parking_lot_data()
+                print(f"datas.count : {len(datas)}")
                 repository.insert_data(datas)
-            return True
-        except ApiError as ex:
-            print(f"Failed to update parking lot : {str(ex)}")
-            return False
+            except ApiError as ex:
+                print(f"Failed to update parking lot : {str(ex)}")
+                success = False
+        return success

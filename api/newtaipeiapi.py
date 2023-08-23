@@ -9,7 +9,25 @@ class NewTaipeiApi(IApi):
 
     def get_parking_lot_data(self) -> List[ParkingData]:
         result = []
-        api = "https://data.ntpc.gov.tw/api/datasets/b1464ef0-9c7c-4a6f-abf7-6bdf32847e68/json?size=1500"
+        api = "https://data.ntpc.gov.tw/api/datasets/b1464ef0-9c7c-4a6f-abf7-6bdf32847e68/json?size=1000&page=1"
+
+        response = call_api(api)
+        print(response.status_code)
+        parks = response.json()
+        for park in parks:
+            result.append(
+                ParkingLot(
+                    official_id=park.get('ID'),
+                    name=park.get('NAME'),
+                    description=f"{park.get('SUMMARY')}\n{park.get('PAYEX')}\n{park.get('SERVICETIME')}",
+                    county='NewTaipei',
+                    district=park.get('AREA'),
+                    address=park.get('ADDRESS'),
+                    total_parking_spaces=park.get('TOTALCAR', -9),
+                )
+            )
+        
+        api = "https://data.ntpc.gov.tw/api/datasets/b1464ef0-9c7c-4a6f-abf7-6bdf32847e68/json?size=1000"
 
         response = call_api(api)
         print(response.status_code)
@@ -27,7 +45,7 @@ class NewTaipeiApi(IApi):
                 )
             )
 
-        return result
+        return list(set(result))
 
     def get_allavailable_data(self) -> List[ParkingData]:
         result = []
