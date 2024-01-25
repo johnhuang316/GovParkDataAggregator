@@ -51,8 +51,7 @@ class NewTaipeiApi(IApi):
         result = []
         page = 1
         while True:
-            api = f"https://data.ntpc.gov.tw/api/datasets/e09b35a5-a738-48cc-b0f5-570b67ad9c78/json?size=100&page={
-                page}"
+            api = f"https://data.ntpc.gov.tw/api/datasets/e09b35a5-a738-48cc-b0f5-570b67ad9c78/json?size=100&page={page}"
             response = call_api(api)
             parks = response.json()
             if not parks:
