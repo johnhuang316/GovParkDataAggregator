@@ -38,12 +38,16 @@ class TaoyuanApi(IApi):
         parks = data['parkingLots']
         now = datetime.now().isoformat(sep=" ", timespec="seconds")
         for park in parks:
+            try:
+                remaining_parking_spaces = int(park.get('surplusSpace', "-9"))
+            except ValueError:
+                remaining_parking_spaces = -9  
             result.append(
                 TimeParkingAvailability(
                     official_id=park.get('parkId'),
                     county='Taoyuan',
                     time=now,
-                    remaining_parking_spaces=int(park.get('surplusSpace', "-9"))
+                    remaining_parking_spaces=remaining_parking_spaces
                 )
             )
         return result
