@@ -19,8 +19,7 @@ class NewTaipeiApi(IApi):
                 ParkingLot(
                     official_id=park.get('ID'),
                     name=park.get('NAME'),
-                    description=f"{park.get('SUMMARY')}\n{park.get('PAYEX')}\n{
-                        park.get('SERVICETIME')}",
+                    description=f"{park.get('SUMMARY')}\n{park.get('PAYEX')}\n{park.get('SERVICETIME')}",
                     county='NewTaipei',
                     district=park.get('AREA'),
                     address=park.get('ADDRESS'),
