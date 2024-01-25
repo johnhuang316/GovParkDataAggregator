@@ -43,8 +43,7 @@ class TaoyuanApi(IApi):
                     official_id=park.get('parkId'),
                     county='Taoyuan',
                     time=now,
-                    remaining_parking_spaces=int(
-                        park.get('surplusSpace', "-9"))
+                    remaining_parking_spaces=int(park.get('surplusSpace', "-9"))
                 )
             )
         return result
