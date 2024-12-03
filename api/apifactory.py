@@ -1,6 +1,7 @@
 import inspect
-import pkgutil
-import api
+import importlib
+import os
+from pathlib import Path
 from .iapi import IApi
 
 
@@ -10,12 +11,29 @@ class ApiFactory:
 
     def _find_subclasses(self, cls):
         subclasses = {}
-        # Import every module in the 'api' package
-        for _, name, _ in pkgutil.walk_packages(api.__path__, api.__name__ + '.'):
-            module = __import__(name, fromlist='dummy')
-            for _, obj in inspect.getmembers(module):
-                if inspect.isclass(obj) and issubclass(obj, cls) and obj is not cls:
-                    subclasses[obj.api_name] = obj
+        # Get the directory of the api package
+        api_dir = Path(__file__).parent
+        
+        # Scan for all Python files in the directory
+        for file in api_dir.glob("*.py"):
+            if file.name.startswith("__"):
+                continue
+                
+            # Convert file path to module name
+            module_name = f"api.{file.stem}"
+            try:
+                # Import the module
+                module = importlib.import_module(module_name)
+                # Look for classes in the module
+                for _, obj in inspect.getmembers(module):
+                    if (inspect.isclass(obj) and 
+                        issubclass(obj, cls) and 
+                        obj is not cls and 
+                        hasattr(obj, 'api_name')):
+                        subclasses[obj.api_name] = obj
+            except ImportError as e:
+                print(f"Failed to import {module_name}: {e}")
+                
         return subclasses
 
     def get_api(self, api_type: str) -> IApi:
