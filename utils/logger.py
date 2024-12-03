@@ -11,6 +11,11 @@ def setup_logger():
 
     # Create logger
     logger = logging.getLogger('GovParkDataAggregator')
+    
+    # Remove any existing handlers
+    if logger.hasHandlers():
+        logger.handlers.clear()
+    
     logger.setLevel(logging.DEBUG)
 
     # Create formatters
