@@ -1,3 +1,4 @@
 dataclasses
 google-cloud-bigquery
 python-dotenv
+pytz
