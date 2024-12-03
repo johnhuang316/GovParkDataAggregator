@@ -1,4 +1,7 @@
 dataclasses
-google-cloud-bigquery
+google-cloud-bigquery<3.11.0
 python-dotenv
 pytz
+pytest
+pytest-cov
+setuptools<67.0.0
