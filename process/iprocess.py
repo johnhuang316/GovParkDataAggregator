@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from repository.irepository import IPepository
-from api.taipeiapi import IApi
+from api.iapi import IApi
 
 
 @dataclass

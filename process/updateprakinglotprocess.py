@@ -1,6 +1,6 @@
 import time
 from dataclasses import dataclass
-from datastorage.bigquerytableschema import ParkingLot
+from datastorage.tableschema import ParkingLot
 from api.apierror import ApiError
 from .iprocess import IProcess
 

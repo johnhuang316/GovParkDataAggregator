@@ -1,7 +1,7 @@
 from typing import List
 from datetime import datetime
 from dto.parkingdata import ParkingData, ParkingLot, TimeParkingAvailability
-from .iapi import IApi, call_api
+from ..iapi import IApi, call_api
 
 
 class NewTaipeiApi(IApi):

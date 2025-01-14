@@ -4,7 +4,7 @@ from dataclasses import asdict, dataclass
 from google.cloud import bigquery
 from dto.parkingdata import ParkingData
 from .idatastorage import IDataStorage
-from .bigquerytableschema import TableSchema
+from .tableschema import TableSchema
 from utils.logger import logger
 
 

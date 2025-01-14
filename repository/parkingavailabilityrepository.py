@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from dto.parkingdata import ParkingData
-from datastorage.bigquerytableschema import TableSchema
+from datastorage.tableschema import TableSchema
 from .irepository import IPepository
 
 

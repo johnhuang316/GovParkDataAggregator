@@ -17,11 +17,11 @@ def main():
         api_factory.get_api("Taoyuan"),
         api_factory.get_api("NewTaipei"),
     ]
-    logger.debug(f"Initialized APIs: {[api.__class__.__name__ for api in api_list]}")
+    logger.debug("Initialized APIs: %s", [api.__class__.__name__ for api in api_list])
     
     storage = BigQueryStorage()
     action = os.getenv("ACTION", default="")
-    logger.info(f"Executing action: {action}")
+    logger.info("Executing action: %s", action)
     
     try:
         match action:
@@ -33,7 +33,7 @@ def main():
                 process = LogParkingAvailability(repository, api_list)
             case "single_log_parking_availability":
                 api_name = os.getenv("API", default="")
-                logger.info(f"Processing single API: {api_name}")
+                logger.info("Processing single API: %s", api_name)
                 single_api_list = [
                     api_factory.get_api(api_name)
                 ]
@@ -43,7 +43,7 @@ def main():
                 repository = ParkingAvailabilityRepository(storage)
                 process = ResetParkingAvailability(repository)
             case _:
-                logger.error(f"Invalid action specified: {action}")
+                logger.error("Invalid action specified: %s", action)
                 raise ValueError("no action")
 
         success = process.exec()
@@ -53,7 +53,7 @@ def main():
         logger.info("Process completed successfully")
         
     except Exception as e:
-        logger.exception(f"An error occurred during execution: {str(e)}")
+        logger.exception("An error occurred during execution: %s", str(e))
         raise
 
 if __name__ == "__main__":

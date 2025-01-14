@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from dto.parkingdata import ParkingData
 from datastorage.idatastorage import IDataStorage
-from datastorage.bigquerytableschema import TableSchema
+from datastorage.tableschema import TableSchema
 
 
 @dataclass

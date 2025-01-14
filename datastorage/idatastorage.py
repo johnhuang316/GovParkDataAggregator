@@ -1,7 +1,7 @@
 import string
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from datastorage.bigquerytableschema import TableSchema
+from datastorage.tableschema import TableSchema
 from dto.parkingdata import ParkingData
 
 

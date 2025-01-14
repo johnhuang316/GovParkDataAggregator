@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from datastorage.bigquerytableschema import TimeParkingAvailability
+from datastorage.tableschema import TimeParkingAvailability
 from api.apierror import ApiError
 from .iprocess import IProcess
 
